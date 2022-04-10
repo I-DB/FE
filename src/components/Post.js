@@ -4,12 +4,17 @@ import { Button, Grid, Text } from "../elements";
 import { history } from "../redux/configureStore";
 
 const Post = (props) => {
+
+  //console.log(props.comment)
+  const comment = props.comment;
+
   return (
+
     <React.Fragment>
       <Grid is_center border="0.5px solid silver" margin="20px 0">
         <Grid is_flex padding="10px">
-          <Text bold>{props.user_name}</Text>
-          <Text>{props.insert_dt}</Text>
+          <Text bold>{props.nickName}</Text>
+          <Text>{props.createdAt}</Text>
         </Grid>
 
         <Grid flex_end padding="10px">
@@ -17,25 +22,39 @@ const Post = (props) => {
           {/* <Button width="100px" margin="0 5px" _onClick={() => {history.push(`/post/${props.id}`)}}>수정</Button> */}
         </Grid>
 
-        {/* <Grid> */}
+
         <Grid
           _onClick={() => {
-            history.push(`/post/${props.id}`);
+            history.push(`/post/${props._id}`);
           }}
         >
           <Grid>
             <Text bold margin="0 0 10px 20px">
-              {" "}
-              {props.title}
+            {props.title}
             </Text>
             <TextHide>
-              <Text margin="0 0 0 20px"> {props.content}</Text>
+              <Text margin="0 0 0 20px">{props.content}</Text>
             </TextHide>
           </Grid>
           <Grid is_flex padding="5px">
             <Grid is_flex padding="5px" width="150px">
-              <Text>좋아요 {props.like_cnt}개</Text>
-              <Text>댓글 {props.comment_cnt}개</Text>
+
+            {/* 댓글 가져오기 연습 */}
+            
+              {/* {
+                //props.comment !== 0(
+                  comment.map((p, idx)=>{
+                    return(
+                          <Text key={idx}>{p.userId}</Text>
+                    )
+                  })
+                //)
+
+
+              } */}
+            
+              <Text>좋아요 개</Text>
+              {/* <Text>댓글 {props.comment_cnt}개</Text> */}
             </Grid>
           </Grid>
         </Grid>
@@ -57,6 +76,8 @@ Post.defaultProps = {
   insert_dt: "2022-04-01 10:00:00",
 
   is_me: false,
+
+  comment: "",
 };
 
 const TextHide = styled.div`
