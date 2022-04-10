@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Grid, Text, Input, Button } from "../elements";
+import { actionCreators as useActions } from "../redux/modules/user";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
+  const [userId, setUserId] = useState();
+  const [password, setPassWord] = useState();
+  const [nickName, setNickName] = useState();
+  const [comPwd, setComPwd] = useState();
+
+  const join = () => {
+    dispatch(useActions.signupUser(userId, password, nickName, comPwd));
+  };
+
   return (
     <>
       <Grid border="1mm ridge #90e0ef" bg="#cbf3f0">
@@ -13,7 +26,7 @@ const Signup = () => {
             label="아이디"
             placeholder="아이디를 입력해주새요."
             _onChange={(e) => {
-              console.log(e.target.value);
+              setUserId(e.target.value);
             }}
           />
         </Grid>
@@ -23,7 +36,7 @@ const Signup = () => {
             placeholder="비밀번호를 입력해주세요."
             type="password"
             _onChange={(e) => {
-              console.log(e.target.value);
+              setPassWord(e.target.value);
             }}
           />
         </Grid>
@@ -33,7 +46,7 @@ const Signup = () => {
             placeholder="비밀번호를 입력해주세요."
             type="password"
             _onChange={(e) => {
-              console.log(e.target.value);
+              setComPwd(e.target.value);
             }}
           />
         </Grid>
@@ -42,18 +55,11 @@ const Signup = () => {
             label="닉네임"
             placeholder="닉네임을 입력해주새요."
             _onChange={(e) => {
-              console.log(e.target.value);
+              setNickName(e.target.value);
             }}
           />
         </Grid>
-        <Button
-          text="가입하기"
-          width="230px"
-          margin="10px 35% 30px"
-          _onClick={() => {
-            console.log("회원가임됨");
-          }}
-        />
+        <Button text="가입하기" width="230px" margin="10px 35% 30px" _onClick={join} />
       </Grid>
     </>
   );
