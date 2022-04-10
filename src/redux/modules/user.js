@@ -4,7 +4,6 @@ import produce from "immer";
 import { apis } from "../../shared/axios";
 
 import { cookies } from "../../shared/cookie";
-import axios from "axios";
 
 // 액션
 const SIGN_UP = "SIGN_UP";
@@ -42,7 +41,8 @@ const signupUser = (userId, password, nickName, comPwd) => {
     apis
       .post("/user/join", { userId: userId, password: password, confirmPassword: comPwd, nickName: nickName })
       .then((response) => {
-        console.log(response);
+        alert(response.data.msg);
+        history.replace("/");
       })
       .catch((error) => {
         console.log(error);
