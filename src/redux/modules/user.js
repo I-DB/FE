@@ -1,7 +1,7 @@
 import { createAction, handleAction } from "redux-actions";
 import jwtDecode from "jwt-decode";
 import produce from "immer";
-import instance from "../../shared/apis";
+import { apis } from "../../shared/axios";
 
 import { cookies } from "../../shared/cookie";
 import axios from "axios";
@@ -25,7 +25,7 @@ const initialState = {
 // 미들웨어
 const loginUser = (id, pwd) => {
   return function (dispatch, getState, { history }) {
-    instance
+    apis
       .post("/user/login", { userId: id, password: pwd })
       .then((response) => {
         console.log(response);
@@ -39,7 +39,7 @@ const loginUser = (id, pwd) => {
 const signupUser = (userId, password, nickName, comPwd) => {
   console.log(userId, password, comPwd, nickName);
   return function (dispatch, getState, { history }) {
-    instance
+    apis
       .post("/user/join", { userId: userId, password: password, confirmPassword: comPwd, nickName: nickName })
       .then((response) => {
         console.log(response);

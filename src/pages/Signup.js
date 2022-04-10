@@ -17,7 +17,7 @@ const Signup = () => {
 
   return (
     <>
-      <Grid border="1mm ridge #90e0ef" bg="#cbf3f0">
+      <Grid border="1mm ridge #90e0ef" bg="#cbf3f0" margin="100px 0 0 0">
         <Text size="30px" bold textAlign="center">
           회원가입
         </Text>

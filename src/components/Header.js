@@ -3,6 +3,8 @@ import { Grid, Text, Button } from "../elements";
 // import { getCookie, deleteCookie } from "../shared/Cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { history } from "../redux/configureStore";
+import styled from "styled-components";
+import IDBLogo from "../imgs/IDBLogo.png";
 // import Permit from "../shared/Permit";
 
 const Header = (props) => {
@@ -47,18 +49,20 @@ const Header = (props) => {
 
   return (
     <React.Fragment>
-      <Grid is_flex padding="4px 16px">
+      {/* <Grid is_flex padding="4px 16px"> */}
+      <Container>
         <Grid>
-          <Text
+          {/* <Text
             margin="20px 0"
             size="24px"
             bold
             _onClick={() => {
-              history.push("/");
+              history.push("/postList");
             }}
           >
             IDB
-          </Text>
+          </Text> */}
+        <LogoImage alt="IDBLogo" src={IDBLogo} onClick={()=>{ history.push("/postList");}}/>
         </Grid>
 
         <Grid flex_end>
@@ -82,7 +86,8 @@ const Header = (props) => {
             }}
           ></Button>
         </Grid>
-      </Grid>
+      {/* </Grid> */}
+      </Container>
     </React.Fragment>
   );
 };
@@ -90,3 +95,28 @@ const Header = (props) => {
 Header.defaultProps = {};
 
 export default Header;
+
+const Container = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+background-color : white;
+align-items: center;
+padding: 5px;
+width : 1200px;
+
+position : fixed;
+top : 0;
+z-index : 0;
+
+p {
+  font-weight: bolder;
+  color: white;
+  font-size: 25px;
+}
+`
+
+const LogoImage = styled.img`
+  width : 27%;
+  margin-left : 10px;
+`;

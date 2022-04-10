@@ -6,12 +6,13 @@ import { useDispatch } from "react-redux";
 import { Button, Grid } from "../elements";
 import styled from "styled-components";
 import Main from "../pages/Main";
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import PostList from "../pages/PostList";
 import PostDetail from "../pages/PostDetail";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PostWrite from "../pages/PostWrite";
+import Header from "../components/Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +25,9 @@ function App() {
     <React.Fragment>
       <Container>
         <Grid>
-          <Header></Header>
+          <Header>
+
+          </Header>
 
           <ConnectedRouter history={history}>
             <Route path="/" exact component={Main} />
@@ -32,6 +35,7 @@ function App() {
             <Route path="/postList" exact component={PostList} />
             <Route path="/post/:id" exact component={PostDetail} />
             <Route path="/post" exact component={PostWrite} />
+            <Route path="/modify/:id" exact component={PostWrite} />
 
             <Route path="/login" exact component={Login} />
             <Route path="/join" exact component={Signup} />
