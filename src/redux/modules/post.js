@@ -13,8 +13,8 @@ const LOADING = "LOADING";
 //2.
 const setPost = createAction(SET_POST, (post_list)=>({post_list}));
 const addPost = createAction(ADD_POST, (post)=>({post}));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}));
-//const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
+const editPost = createAction(EDIT_POST, (postId, post) => ({postId, post}));
+const deletePost = createAction(DELETE_POST, (postOne) => ({ postOne }));
 //const loading = createAction(LOADING, (is_loading) => ({is_loading}));
 
 //3.
@@ -30,22 +30,21 @@ const initialPost = {
 }
 
 //게시글 get
-export const getPostFB =
+export const getPostDB =
 	() =>
 	async (dispatch, getState, { history }) => {
 		try {
 			const { data } = await apis.postGet();
-			//console.log(data);
             dispatch(setPost(data.result));
 			// dispatch(imageCreators.setPreview(null));
 		} catch (e) {
-			// console.log(`아티클 조회 오류 발생!${e}`);
+			console.log(e);
 		}
 	};
 
 
 //게시글 insert
-const addPostFB = (title="", content="") => {
+const addPostDB = (title="", content="") => {
     return function (dispatch, getState, {history}){
         //console.log(title, content);
 
@@ -63,10 +62,9 @@ const addPostFB = (title="", content="") => {
             content: content
         }, {
             headers:{
-                'Authorization' : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwZDM5M2E3MWJjYzljOTczYjg3ODkiLCJ1c2VySWQiOiJpbm15Ymx1ZTA5MzBAbmF2ZXIuY29tIiwibmlja05hbWUiOiJibHVlbW9uZyIsInBhc3N3b3JkIjoiJDJiJDEwJEtsN3pLenZpcjFnWmVGWHZRTkt0WWVGTUEzZkxIUmx4TlZFeGZtd0pZcjV3dWhxVm14NzRXIiwiX192IjowLCJpYXQiOjE2NDk1NzgxNDJ9.RVJ4srwCei759Mn6oWVN8RzMV-K6HQ_PsiPHUYvNwhM`
+                'Authorization' : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUyZTU5MjRkZWI4NGFiYTk1NGE0MDAiLCJ1c2VySWQiOiJxd2VyMTIzNDUiLCJuaWNrTmFtZSI6InF3ZXIxMjMyMyIsInBhc3N3b3JkIjoiJDJiJDEwJGMzQWtTWnk4OGdIVDJhQnV2Lnp0OE8yYmNsQWY2c3JDaEVFMFlTOHRGMFBHNURYM0lpT3QyIiwiX192IjowLCJpYXQiOjE2NDk2NTg0MjAsImV4cCI6MTY0OTY1ODQ4MH0.U1klS1NAC4Y8dyyzXNSXpd9R9L8WtL359I-MFYaqc5c`
             }
         })
-        //{headers: {Authorization : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwZDM5M2E3MWJjYzljOTczYjg3ODkiLCJ1c2VySWQiOiJpbm15Ymx1ZTA5MzBAbmF2ZXIuY29tIiwibmlja05hbWUiOiJibHVlbW9uZyIsInBhc3N3b3JkIjoiJDJiJDEwJEtsN3pLenZpcjFnWmVGWHZRTkt0WWVGTUEzZkxIUmx4TlZFeGZtd0pZcjV3dWhxVm14NzRXIiwiX192IjowLCJpYXQiOjE2NDk1NzgxNDJ9.RVJ4srwCei759Mn6oWVN8RzMV-K6HQ_PsiPHUYvNwhM`,}, })
         .then(() => {
             dispatch(addPost(_post));
             history.replace('/postList');
@@ -78,6 +76,35 @@ const addPostFB = (title="", content="") => {
 };
 
 //게시글 수정
+const editPostDB = (postId="", title="", content="") => {
+    return function (dispatch, getsTate, {history}) {
+    //   const token = localStorage.getItem('token');
+    //   console.log(token)
+
+    // const _post = {
+    //     title: title,
+    //     content: content
+    // }
+
+      axios
+        .patch(`https://ideadb.shop/post/${postId}`, {
+            title: title,
+            content: content,
+        },
+        { headers: {
+            'Authorization' : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwZDM5M2E3MWJjYzljOTczYjg3ODkiLCJ1c2VySWQiOiJpbm15Ymx1ZTA5MzBAbmF2ZXIuY29tIiwibmlja05hbWUiOiJibHVlbW9uZyIsInBhc3N3b3JkIjoiJDJiJDEwJEtsN3pLenZpcjFnWmVGWHZRTkt0WWVGTUEzZkxIUmx4TlZFeGZtd0pZcjV3dWhxVm14NzRXIiwiX192IjowLCJpYXQiOjE2NDk1NzgxNDJ9.RVJ4srwCei759Mn6oWVN8RzMV-K6HQ_PsiPHUYvNwhM`
+        }
+    })
+        .then(function(response){
+          dispatch(editPost(postId, {title, content}));
+          history.replace('/postList')
+        })
+        .catch(function(err){
+          alert('수정 실패');
+        })
+    }
+  }
+
 
 
 //게시글 삭제
@@ -92,7 +119,7 @@ const deletePostDB = (postId) => {
         }
     })
         .then(function(response){
-          //dispatch(deletePost(postId))
+          dispatch(deletePost(response.data))
           history.replace('/postList')
         })
         .catch(function(err){
@@ -130,16 +157,15 @@ export default handleActions(
         [ADD_POST]: (state, action)=>produce(state, (draft)=>{
             draft.list.unshift(action.payload.post);
         }),
-        // [EDIT_POST]: (state, action) =>produce(state, (draft) => {
-        //     let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
-        //     draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
-        // }),
-        // [DELETE_POST]: (state, action) =>produce(state, (draft) => {
-        
-        //     //draft.list = draft.list.filter((l) => l.id !== action.payload.postId);
-        //      draft.post = action.payload.postId;
-        //     // console.log(action.payload.post_one);
-        //}),
+
+        [EDIT_POST]: (state, action) =>produce(state, (draft) => {
+            let idx = draft.list.findIndex((p) => p._id === action.payload.postId);
+            draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+        }),
+        [DELETE_POST]: (state, action) =>produce(state, (draft) => {
+            //draft.list = draft.list.filter((l) => l._id !== action.payload.postId);
+            draft.post = action.payload.postOne;
+        }),
         // [LOADING]:(state, action) => produce(state, (draft)=>{draft.is_loading = action.payload.is_loading;})
     }, initialState
 );
@@ -148,9 +174,9 @@ const actionCreators = {
     setPost,
     addPost,
     editPost,
-    getPostFB,
-    addPostFB,
-    // editPostFB,
+    getPostDB,
+    addPostDB,
+    editPostDB,
     deletePostDB,
 }
 

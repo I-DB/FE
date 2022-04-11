@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Text, Grid } from "./index";
 
 const Input = (props) => {
-  const { label, placeholder, _onChange, type, multiLine, value } = props;
+  const { label, placeholder, _onChange, type, multiLine, value, maxLength } = props;
 
   if (multiLine) {
     return (
@@ -24,7 +24,7 @@ const Input = (props) => {
     <React.Fragment>
       <Grid>
         <Text margin="0">{label}</Text>
-        <ElInput type={type} placeholder={placeholder} onChange={_onChange} value={value}/>
+        <ElInput type={type} placeholder={placeholder} onChange={_onChange} value={value} maxLength={maxLength}/>
       </Grid>
     </React.Fragment>
   );
@@ -37,6 +37,7 @@ Input.defaultProps = {
   _onChange: () => {},
   multiLine: false,
   value: "",
+  maxLength: "",
 };
 
 const ElInput = styled.input`

@@ -15,6 +15,7 @@ const Grid = (props) => {
     border,
     is_center,
     height,
+    boxShadow,
   } = props;
 
   const styles = {
@@ -28,6 +29,7 @@ const Grid = (props) => {
     border: border,
     is_center: is_center,
     height: height,
+    boxShadow: boxShadow,
   };
 
   return (
@@ -52,11 +54,13 @@ Grid.defaultProps = {
   flex_end: false,
   border: false,
   is_center: false,
+  boxShadow: false,
 };
 
 const GridBox = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  box-shadow : ${(props) => props.boxShadow};
   box-sizing: border-box;
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
