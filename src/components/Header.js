@@ -70,7 +70,7 @@ const Header = (props) => {
             text="로그인"
             margin="0 10px"
             width="150px"
-            color="#4D96FF"
+            color="black"
             backgroundColor="transparent"
             _onClick={() => {
               history.push("/login");
@@ -79,7 +79,7 @@ const Header = (props) => {
           <Button
             text="회원가입"
             width="150px"
-            color="#4D96FF"
+            color="black"
             backgroundColor="transparent"
             _onClick={() => {
               history.push("/join");
@@ -102,7 +102,7 @@ flex-direction: row;
 justify-content: center;
 background-color : white;
 align-items: center;
-padding: 5px;
+
 width : 1200px;
 
 position : fixed;
@@ -119,4 +119,7 @@ p {
 const LogoImage = styled.img`
   width : 27%;
   margin-left : 10px;
+  &:hover {
+    cursor : pointer;
+  }
 `;

@@ -22,21 +22,26 @@ const PostList = (props) => {
   
   React.useEffect(()=>{
     //  if(post_list.length === 0) {
-      dispatch(postActions.getPostFB());
+      dispatch(postActions.getPostDB());
     //  }
   }, []);
 
   return (
     <React.Fragment>
+            <ButtonFix>
+          <Button
+            width="150px"
+            color="white"
+            _onClick={() => {
+              history.push("/post");
+            }}
+          >
+            아이디어 기록
+          </Button>
+      </ButtonFix>
+
       <Container>
-      <Button
-        width="100px"
-        _onClick={() => {
-          history.push("/post");
-        }}
-      >
-        작성
-      </Button>
+
 
       {post_list.map((p, idx)=>{
         return(
@@ -53,6 +58,17 @@ const PostList = (props) => {
 export default PostList;
 
 const Container = styled.div`
-  margin-top : 100px;
+  margin-top : 180px;
+`;
 
+const ButtonFix = styled.div`
+  position : fixed;
+  top : 80px;
+  z-index : 0;
+  
+  width:1200px;
+  display : flex;
+  justify-content : center;
+
+  background-color : white;
 `;
