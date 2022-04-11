@@ -1,20 +1,18 @@
-import { createAction, handleAction } from "redux-actions";
+import { createAction, handleActions } from "redux-actions";
 import jwtDecode from "jwt-decode";
 import produce from "immer";
 import { apis } from "../../shared/axios";
-
-import { cookies } from "../../shared/cookie";
-import axios from "axios";
+import { setCookie, deleteCookie } from "../../shared/cookie";
 
 // 액션
-const SIGN_UP = "SIGN_UP";
+const AUTH = "AUTH";
 const LOG_OUT = "LOG_OUT";
 const LOG_IN = "LOG_IN";
 
 // 액션 크리에이터
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
-const signUp = createAction(SIGN_UP, (user) => ({ user }));
+const Auth = createAction(AUTH, (user) => ({ user }));
 
 // 초기값
 const initialState = {
@@ -26,9 +24,12 @@ const initialState = {
 const loginUser = (id, pwd) => {
   return function (dispatch, getState, { history }) {
     apis
-      .post("/user/login", { userId: id, password: pwd })
+      .login(id, pwd)
       .then((response) => {
         console.log(response);
+        setCookie("token", response.data.token);
+        dispatch(logIn({ id: id }));
+        history.replace("/");
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +41,31 @@ const signupUser = (userId, password, nickName, comPwd) => {
   console.log(userId, password, comPwd, nickName);
   return function (dispatch, getState, { history }) {
     apis
-      .post("/user/join", { userId: userId, password: password, confirmPassword: comPwd, nickName: nickName })
+      .signup(userId, password, comPwd, nickName)
+      .then((response) => {
+        alert(response.data.msg);
+        history.replace("/");
+      })
+      .catch((error) => {
+        alert("회원가입 먼저 해주세요!");
+        console.log(error);
+      });
+  };
+};
+
+const logOutUser = () => {
+  return function (dispatch, setState, { history }) {
+    deleteCookie("token");
+    localStorage.removeItem("userId");
+    dispatch(logOut());
+    history.replace("/");
+  };
+};
+
+const userInfoAuth = () => {
+  return function (dispatch, setState, { history }) {
+    apis
+      .auth()
       .then((response) => {
         console.log(response);
       })
@@ -51,20 +76,24 @@ const signupUser = (userId, password, nickName, comPwd) => {
 };
 
 // 리듀서
-export default handleAction(
+export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        cookies("logins", "success");
+        console.log(action);
         draft.user = action.payload.user;
         draft.isLogin = true;
       }),
   },
   {
-    [LOG_OUT]: (state, action) => produce(state, (draft) => {}),
+    [LOG_OUT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = null;
+        draft.isLogin = false;
+      }),
   },
   {
-    [SIGN_UP]: (state, action) => produce(state, (draft) => {}),
+    [AUTH]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
 );
@@ -74,6 +103,10 @@ const actionCreators = {
   logIn,
   loginUser,
   signupUser,
+  logOut,
+  logOutUser,
+  userInfoAuth,
+  Auth,
 };
 
 export { actionCreators };

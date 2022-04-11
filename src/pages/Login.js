@@ -13,6 +13,13 @@ const Login = () => {
     dispatch(useActions.loginUser(id, pwd));
   };
 
+  const logOut = () => {
+    dispatch(useActions.logOutUser());
+  };
+  const auth = () => {
+    dispatch(useActions.userInfoAuth());
+  };
+
   return (
     <>
       <Grid border="1mm ridge #90e0ef" bg="#cbf3f0" margin="100px 0 0 0">
@@ -26,6 +33,7 @@ const Login = () => {
             _onChange={(e) => {
               setId(e.target.value);
             }}
+            value={id}
           />
         </Grid>
         <Grid padding="15px 20%">
@@ -36,9 +44,12 @@ const Login = () => {
             _onChange={(e) => {
               setPwd(e.target.value);
             }}
+            value={pwd}
           />
         </Grid>
         <Button text="로그인" width="230px" margin="20px 35% 30px" _onClick={login} />
+        <Button text="로그아웃" width="230px" margin="20px 35% 30px" _onClick={logOut} />
+        <Button text="생성" width="230px" margin="20px 35% 30px" _onClick={auth} />
       </Grid>
     </>
   );

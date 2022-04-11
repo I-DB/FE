@@ -28,6 +28,7 @@ const Signup = () => {
             _onChange={(e) => {
               setUserId(e.target.value);
             }}
+            value={userId}
           />
         </Grid>
         <Grid padding="15px 20%">
@@ -38,6 +39,7 @@ const Signup = () => {
             _onChange={(e) => {
               setPassWord(e.target.value);
             }}
+            value={password}
           />
         </Grid>
         <Grid padding="15px 20%">
@@ -48,6 +50,7 @@ const Signup = () => {
             _onChange={(e) => {
               setComPwd(e.target.value);
             }}
+            value={comPwd}
           />
         </Grid>
         <Grid padding="15px 20%">
@@ -57,6 +60,7 @@ const Signup = () => {
             _onChange={(e) => {
               setNickName(e.target.value);
             }}
+            value={nickName}
           />
         </Grid>
         <Button text="가입하기" width="230px" margin="10px 35% 30px" _onClick={join} />
