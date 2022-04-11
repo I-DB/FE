@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 import Post from "./modules/post";
+import user from "./modules/user";
 
 // import User from "./modules/user";
 // import Post from "./modules/post";
@@ -11,7 +12,7 @@ import Post from "./modules/post";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  // user: User,
+  user: user,
   post: Post,
   // like: Like,
   router: connectRouter(history),
