@@ -4,9 +4,7 @@ import { Button, Grid } from "../elements";
 import IDBMain from "../imgs/IDBMain.png";
 import { history } from "../redux/configureStore";
 
-
 const Main = () => {
-
   return (
     <Grid is_center margin="0 auto">
       <MainImage alt="IDBMain" src={IDBMain} />
@@ -28,6 +26,5 @@ export default Main;
 
 const MainImage = styled.img`
   width: 80%;
-  margin-top : 180px;
-
+  margin-top: 180px;
 `;
