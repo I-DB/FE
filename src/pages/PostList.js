@@ -1,3 +1,4 @@
+import { debounce } from "lodash";
 import React from "react";
 // import Post from '../components/Post'
 import { useSelector, useDispatch } from "react-redux";
@@ -18,39 +19,36 @@ const PostList = (props) => {
 
   // }, []);
   const dispatch = useDispatch();
-  const post_list = useSelector((state)=>state.post.list);
-  
-  React.useEffect(()=>{
+  const post_list = useSelector((state) => state.post.list);
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const isToken = document.cookie;
+  React.useEffect(() => {
     //  if(post_list.length === 0) {
-      dispatch(postActions.getPostDB());
+    dispatch(postActions.getPostDB());
     //  }
   }, []);
 
+  const postBut = () => {
+    if (isLogin && isToken) {
+      history.push("/post");
+    } else {
+      alert("로그인을 먼저 해주세요!");
+      history.push("/login");
+    }
+  };
+
   return (
     <React.Fragment>
-            <ButtonFix>
-          <Button
-            width="150px"
-            color="white"
-            _onClick={() => {
-              history.push("/post");
-            }}
-          >
-            아이디어 기록
-          </Button>
+      <ButtonFix>
+        <Button width="150px" color="white" _onClick={postBut}>
+          아이디어 기록
+        </Button>
       </ButtonFix>
-
       <Container>
-
-
-      {post_list.map((p, idx)=>{
-        return(
-              <Post key={idx} {...p}/>
-        )
-      })}
-      
+        {post_list.map((p, idx) => {
+          return <Post key={idx} {...p} />;
+        })}
       </Container>
-      
     </React.Fragment>
   );
 };
@@ -58,17 +56,17 @@ const PostList = (props) => {
 export default PostList;
 
 const Container = styled.div`
-  margin-top : 180px;
+  margin-top: 180px;
 `;
 
 const ButtonFix = styled.div`
-  position : fixed;
-  top : 80px;
-  z-index : 0;
-  
-  width:1200px;
-  display : flex;
-  justify-content : center;
+  position: fixed;
+  top: 80px;
+  z-index: 0;
 
-  background-color : white;
+  width: 1200px;
+  display: flex;
+  justify-content: center;
+
+  background-color: white;
 `;

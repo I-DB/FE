@@ -13,21 +13,20 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import PostWrite from "../pages/PostWrite";
 import Header from "../components/Header";
+import { actionCreators as useActions } from "../redux/modules/user";
 
 function App() {
   const dispatch = useDispatch();
 
-  // React.useEffect(() => {
-
-  // }, []);
+  React.useEffect(() => {
+    dispatch(useActions.loginCheck());
+  }, []);
 
   return (
     <React.Fragment>
       <Container>
         <Grid>
-          <Header>
-
-          </Header>
+          <Header></Header>
 
           <ConnectedRouter history={history}>
             <Route path="/" exact component={Main} />

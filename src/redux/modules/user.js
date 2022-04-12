@@ -21,22 +21,8 @@ const initialState = {
 };
 
 // 미들웨어
-const loginUser = (id, pwd) => {
-  return function (dispatch, getState, { history }) {
-    apis
-      .login(id, pwd)
-      .then((response) => {
-        console.log(response);
-        setCookie("token", response.data.token);
-        dispatch(logIn({ id: id }));
-        history.replace("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
 
+// 회원가입
 const signupUser = (userId, password, nickName, comPwd) => {
   console.log(userId, password, comPwd, nickName);
   return function (dispatch, getState, { history }) {
@@ -53,25 +39,74 @@ const signupUser = (userId, password, nickName, comPwd) => {
   };
 };
 
+// 로그인
+const loginUser = (id, pwd) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .login(id, pwd)
+      .then((response) => {
+        console.log(response);
+        const data = response.data.token;
+        setCookie("token", response.data.token);
+        const userInfo = jwtDecode(data);
+        localStorage.setItem("userId", userInfo.userId);
+        dispatch(logIn({ id: id }));
+        history.replace("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+// 로그아웃
 const logOutUser = () => {
   return function (dispatch, setState, { history }) {
     deleteCookie("token");
+    // deleteCookie("refreshToken");
     localStorage.removeItem("userId");
     dispatch(logOut());
     history.replace("/");
   };
 };
 
-const userInfoAuth = () => {
+// 유저 정보
+// const userInfoAuth = () => {
+//   return function (dispatch, setState, { history }) {
+//     apis
+//       .auth()
+//       .then((response) => {
+//         // localStorage.setItem("nickName", response.data.user.nickName);
+//         // localStorage.setItem("ID", response.data.user.userId);
+//         const tokenCheck = document.cookie;
+//         // const nickName = localStorage.getItem("nickName");
+//         // const userId = localStorage.getItem("ID");
+//         if (tokenCheck) {
+//           // dispatch(dispatch(logIn({ nickName: nickName, userId: userId })));
+//         } else {
+//           dispatch(logOutUser());
+//         }
+//         console.log(response);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         alert("다시 로그인 해주세요");
+//         history.replace("/login");
+//       });
+//   };
+// };
+
+// 로그인 체크
+const loginCheck = () => {
   return function (dispatch, setState, { history }) {
-    apis
-      .auth()
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const tokenCheck = document.cookie;
+    const userId = localStorage.getItem("userId");
+    // const userId
+    if (tokenCheck) {
+      dispatch(logIn({ userId: userId }));
+    } else {
+      dispatch(logOutUser());
+    }
   };
 };
 
@@ -84,15 +119,13 @@ export default handleActions(
         draft.user = action.payload.user;
         draft.isLogin = true;
       }),
-  },
-  {
+
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         draft.user = null;
         draft.isLogin = false;
       }),
-  },
-  {
+
     [AUTH]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
@@ -105,8 +138,7 @@ const actionCreators = {
   signupUser,
   logOut,
   logOutUser,
-  userInfoAuth,
-  Auth,
+  loginCheck,
 };
 
 export { actionCreators };
