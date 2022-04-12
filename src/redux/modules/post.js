@@ -8,13 +8,15 @@ const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
-const LOADING = "LOADING";
+const SET_LIKE = "SET_LIKE";
+//const LOADING = "LOADING";
 
 //2.
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (postId, post) => ({ postId, post }));
 const deletePost = createAction(DELETE_POST, (postOne) => ({ postOne }));
+const setLike = createAction(SET_LIKE, (like_data) => ({ like_data }));
 //const loading = createAction(LOADING, (is_loading) => ({is_loading}));
 
 //3.
@@ -65,7 +67,8 @@ const addPostDB = (title = "", content = "") => {
 
 //게시글 수정
 const editPostDB = (postId = "", title = "", content = "") => {
-  return function (dispatch, getsTate, { history }) {
+  return function (dispatch, getState, { history }) {
+
     apis
       .postEdit(postId, title, content)
       .then(function (response) {
@@ -80,7 +83,7 @@ const editPostDB = (postId = "", title = "", content = "") => {
 
 //게시글 삭제
 const deletePostDB = (postId) => {
-  return function (dispatch, getsTate, { history }) {
+  return function (dispatch, getState, { history }) {
     apis
       .postDelete(postId)
       .then(function (response) {
@@ -92,6 +95,22 @@ const deletePostDB = (postId) => {
       });
   };
 };
+
+
+//좋아요
+const addLike = (postId) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .addLike(postId)
+      .then(function (response) {
+        // const like_data = {};
+      })
+      .catch(function (err) {
+        alert("좋아요 실패!!!!");
+      });
+  };
+};
+
 
 //게시글 하나
 // const initialPost = {
@@ -136,6 +155,12 @@ export default handleActions(
         );
         //draft.post = action.payload.postOne;
       }),
+
+    [SET_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.like_data;
+      }),
+
     // [LOADING]:(state, action) => produce(state, (draft)=>{draft.is_loading = action.payload.is_loading;})
   },
   initialState
@@ -149,6 +174,8 @@ const actionCreators = {
   addPostDB,
   editPostDB,
   deletePostDB,
+  addLike,
+
 };
 
 export { actionCreators };
