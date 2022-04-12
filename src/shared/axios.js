@@ -17,7 +17,8 @@ instance.interceptors.request.use(function (config) {
   config.headers.common["Authorization"] = `Bearer ${accessToken}`;
   // config.headers.common["refreshToken"] = `Bearer ${refreshToken}`;
   console.log(config);
-  return config;
+  // console.log(config);
+
 });
 
 export const apis = {
@@ -40,8 +41,9 @@ export const apis = {
     instance.patch(`/post/${postId}`, { title: title, content: content }),
   postDelete: (postId) => instance.delete(`/post/${postId}`),
 
-  addLike: (postId) => instance.patch(`/post/like/${postId}}`),
 
+  addLike: (postId) => instance.patch(`/post/like/${postId}`),
+  //addLike: (postId) => instance.patch(`/post/like/${postId}`, {postId: postId}),
   // postGetOne : (items) => instance.get(`/api/items/${}`),
   //imageUpload: (image) => instance.post("/api/imgs", image),
 };
