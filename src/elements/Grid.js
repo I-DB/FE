@@ -1,3 +1,4 @@
+import { faRodAsclepius } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import styled from "styled-components";
 
@@ -16,6 +17,7 @@ const Grid = (props) => {
     is_center,
     height,
     boxShadow,
+    borderRadius,
   } = props;
 
   const styles = {
@@ -30,6 +32,7 @@ const Grid = (props) => {
     is_center: is_center,
     height: height,
     boxShadow: boxShadow,
+    borderRadius : borderRadius,
   };
 
   return (
@@ -55,6 +58,7 @@ Grid.defaultProps = {
   border: false,
   is_center: false,
   boxShadow: false,
+  borderRadius: null,
 };
 
 const GridBox = styled.div`
@@ -73,6 +77,7 @@ const GridBox = styled.div`
   ${(props) => (props.center ? `text-align: center;` : "")}
   ${(props) => (props.flex_end ? `display: flex; justify-content: flex-end;` : "")}
   ${(props) => (props.border ? `border:${props.border}` : "")}
+  ${(props) => (props.borderRadius ? `border-radius:${props.borderRadius}` : "")}
 `;
 
 export default Grid;

@@ -15,23 +15,27 @@ const Login = () => {
 
   return (
     <>
-      <Grid border="1mm ridge #90e0ef" bg="#cbf3f0" margin="100px 0 0 0">
-        <Text size="30px" bold textAlign="center">
+    <Grid height="100vh" is_center>
+      <Grid bg="#F3E9DD" margin="100px 0 0 0" width="500px" height="700px" is_center borderRadius="10px">
+      <Text size="18px"  textAlign="center" color="#889EAF" bold>
+          세상을 바꾸는 <Text color="#4D96FF" bold size="18px">I:DB</Text>
+        </Text>
+        <Text size="25px" bold textAlign="center">
           로그인
         </Text>
-        <Grid padding="15px 20%">
+        <Grid padding="15px 20%" height="100px">
           <Input
-            label="아이디"
-            placeholder="아이디를 입력해주새요."
+            label=""
+            placeholder="아이디를 입력해주세요."
             _onChange={(e) => {
               setId(e.target.value);
             }}
             value={id}
           />
         </Grid>
-        <Grid padding="15px 20%">
+        <Grid padding="15px 20%" height="100px">
           <Input
-            label="비밀번호"
+            label=""
             placeholder="비밀번호를 입력해주세요."
             type="password"
             _onChange={(e) => {
@@ -47,6 +51,7 @@ const Login = () => {
           _onClick={login}
         />
       </Grid>
+    </Grid>
     </>
   );
 };
