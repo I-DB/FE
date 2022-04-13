@@ -13,15 +13,16 @@ const Post = (props) => {
   const comment_cnt = comment.length;
   // console.log(cnt);
 
-  // const updatedAt = props.updatedAt;
+  const updatedAt = props.updatedAt;
   // console.log(updatedAt);
-  // const newdate = updatedAt.substr(0, 10)
+  const newdate = updatedAt.substr(0, 10)
   // const newtime = updatedAt.substr(11, 5);  //03:05
   // const hour = newtime.substr(0, 2);
   // const newhour = parseInt(hour) + 9;
   // const min = newtime.substr(4,2);
   // const newupdatedAt = newdate + " " + newhour + "시 " + min + "분";
   // console.log(newupdatedAt)
+  
 
   return (
     <React.Fragment>
@@ -35,7 +36,7 @@ const Post = (props) => {
           <Text bold margin="0 10px">
             {props.nickName}
           </Text>
-          <Text margin="10px">{props.createdAt}</Text>
+          <Text margin="10px" color="darkgrey">{newdate}</Text>
         </Grid>
 
         {/* <Grid flex_end padding="10px"> */}

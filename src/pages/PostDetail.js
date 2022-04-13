@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Post from "../components/Post";
 import { Button, Grid, Input, Text } from "../elements";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,33 +14,58 @@ import { apis } from "../shared/axios";
 
 const PostDetail = (props) => {
   const dispatch = useDispatch();
-  // const user_info = useSelector((state)=>state.user.user);
-  const post_list = useSelector((state) => state.post.list);
+  // const post_list = useSelector((state) => state.post.list);
 
+  const postOne = useSelector((state) => state.post.target);
+
+  const likeList = useSelector((state) => state.post.like_list);
+  console.log(likeList)
+  const [likeLength, setLikeLength] = useState(likeList.length);
+  
   const id = props.match.params.id;
-  const post = post_list.find((p) => p._id === id);
-
-  const comment = post.comment;
-  const comment_cnt = comment.length;
+  const [is_like, setIsLike] = useState(false);
 
   const localUserId = localStorage.getItem("userId");
-  const userId = post.userId;
+  const likeUser = likeList.find((p) => p === localUserId);
 
-  const [is_like, setIsLike] = React.useState(false);
+  const userId = postOne.userId;
+  //const newdate = postOne.updatedAt.substr(0, 10);
 
   const likeCheck = () => {
-    dispatch(postActions.addLike(id));
-    setIsLike(!is_like);
-    console.log(is_like);
+      if(!localUserId){
+        alert("로그인 후 이용 가능합니다!");
+        history.replace("/login");
+      }
+      dispatch(postActions.addLike(id));
+      setIsLike(true);
+      setLikeLength(likeLength+1);
+
+    // apis.addLike(id)
+    // .then((res)=>{
+    //   setIsLike(true);
+    //   dispatch(postActions.getPostOneDB(id));
+    //})
   };
 
-  // React.useEffect(()=>{
-  //     if(post){
-  //       return;
-  //     }
-  //     dispatch(postActions.loadOnePostFB(id));
+  const unlikeCheck = () => {
+    if(!localUserId){
+      alert("로그인 후 이용 가능합니다!");
+      history.replace("/login");
+    }
+      dispatch(postActions.addUnlike(id));
+      setIsLike(false);
+      setLikeLength(likeLength-1);
+  };
 
-  // }, []);
+
+  React.useEffect(() => {
+    dispatch(postActions.getPostOneDB(id));
+    //console.log(likeUser)
+    if(likeUser) {
+      setIsLike(true);
+    }
+  }, []);
+
 
   const deletePost = () => {
     alert("삭제가 완료되었습니다!");
@@ -48,20 +73,6 @@ const PostDetail = (props) => {
   };
 
   return (
-    // <>
-
-    //   {post && (
-    //     <>
-    //       <Post {...post} is_me={post.user_info.user_id === user_info?.id} />
-    //       {post.user_info.user_id === user_info?.id ? (
-    //         <Grid is_flex>
-    //           <Button width="100px" margin="0 5px" _onClick={deletePost} >삭제하기</Button>
-    //         </Grid>
-    //       ) : null}
-    //     </>
-    //   )}
-    // </>
-
     <>
       <Grid margin="200px 0 0 0" height="auto" is_flex>
         <LeftContainer>
@@ -69,18 +80,17 @@ const PostDetail = (props) => {
           <Container>
             <Grid is_flex height="120px">
               <Text bold margin="25px 0 0 30px" size="15px">
-                작성자 : {post.nickName}
+                작성자 : {postOne.nickName}
               </Text>
               <Text margin="0 15px 0 0" color="darkgrey">
-                {post.updatedAt}
               </Text>
             </Grid>
             <Grid>
               <Text bold margin="25px 0 0 30px" size="18px" color="#4D96FF">
-                제목 : {post.title}
+                제목 : {postOne.title}
               </Text>
               <Text bold margin="25px 0 0 30px" size="15px">
-                내용 : {post.content}
+                내용 : {postOne.content}
               </Text>
             </Grid>
           </Container>
@@ -89,19 +99,17 @@ const PostDetail = (props) => {
             {is_like ? (
               <FontAwesomeIcon
                 icon={faThumbsUp}
-                className="search"
                 style={{
                   fontSize: "20px",
                   color: "red",
                   marginRight: "5px",
                   marginLeft: "5px",
                 }}
-                onClick={likeCheck}
-              />
+                onClick={unlikeCheck}
+              /> 
             ) : (
               <FontAwesomeIcon
                 icon={faThumbsUp}
-                className="search"
                 style={{
                   fontSize: "20px",
                   color: "#4D96FF",
@@ -111,8 +119,9 @@ const PostDetail = (props) => {
                 onClick={likeCheck}
               />
             )}
+            {/* {likeList.length} */}
+            {likeLength} 
 
-            {post.liked.length}
 
             <ButtonFlex>
               {localUserId === userId ? (
@@ -138,6 +147,7 @@ const PostDetail = (props) => {
           </Bottom>
         </LeftContainer>
 
+        {/* ~ 댓글 부분 ~ */}
         {/* <Grid height="20px" width="800px" margin="0 0 30px 0"> */}
         {/* <Grid> */}
         <LeftContainer>
@@ -153,7 +163,7 @@ const PostDetail = (props) => {
                 marginLeft: "5px",
               }}
             />
-            {comment_cnt}
+            {/* {postOne.comment.length} */}
           </Text>
           {/* </Grid> */}
 
@@ -161,8 +171,8 @@ const PostDetail = (props) => {
           <Buttons>등록</Buttons>
 
           <CommentContainer>
-            {post.comment
-              ? post.comment.map((p, idx) => {
+            {postOne.comment
+              ? postOne.comment.map((p, idx) => {
                   return (
                     <Grid
                       height="100px"
@@ -183,7 +193,7 @@ const PostDetail = (props) => {
                     </Grid>
                   );
                 })
-              : null}
+              : []}
           </CommentContainer>
         </LeftContainer>
       </Grid>

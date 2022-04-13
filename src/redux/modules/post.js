@@ -5,6 +5,7 @@ import axios from "axios";
 
 //1.
 const SET_POST = "SET_POST";
+const SET_DETAIL = "SET_DETAIL";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
@@ -13,14 +14,18 @@ const SET_LIKE = "SET_LIKE";
 
 //2.
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
+const setPostOne = createAction(SET_DETAIL, (post_one)=>({post_one}));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (postId, post) => ({ postId, post }));
 const deletePost = createAction(DELETE_POST, (postOne) => ({ postOne }));
 const setLike = createAction(SET_LIKE, (like_data) => ({ like_data }));
+
 //const loading = createAction(LOADING, (is_loading) => ({is_loading}));
 
 //3.
 const initialState = {
+  like_list:[],
+  target:[],
   list: [],
   is_loading: false,
 };
@@ -28,8 +33,11 @@ const initialState = {
 const initialPost = {
   title: "제목제목",
   content: "내용내용",
-  liked: 3,
+  liked: 0,
+  comment: 0,
 };
+
+
 
 //게시글 get
 export const getPostDB =
@@ -43,6 +51,40 @@ export const getPostDB =
       console.log(e);
     }
   };
+
+//게시글 하나
+// const  getPostOneDB = (id) => {
+//   return function (dispatch, getState, { history }) {
+//   apis
+//   .postOne(id)
+//   .then((res) => {
+//     // dispatch(addPost(_post));
+//     // history.replace("/postList");
+//     //console.log(res.data.result);
+
+//     let post_one = res.data.result;
+//     dispatch(setPostOne(post_one));
+//   })
+//   .catch((err) => {
+//     window.alert("포스트 하나 가져오기 실패");
+//   });
+// }
+// }
+
+export const getPostOneDB =
+  (id) =>
+  async (dispatch, getState, { history }) => {
+
+    try {
+      const { data } = await apis.postOne(id);
+      dispatch(setLike(data.result.liked));
+      dispatch(setPostOne(data.result));
+
+    } catch (e) {
+      console.log("디테일 가져오기 실패");
+    }
+  };
+
 
 //게시글 insert
 const addPostDB = (title = "", content = "") => {
@@ -111,6 +153,20 @@ const addLike = (postId) => {
   };
 };
 
+//좋아요 취소
+const addUnlike = (postId) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .addUnlike(postId)
+      .then(function (response) {
+        // const like_data = {};
+      })
+      .catch(function (err) {
+        alert("언라이크 실패!!!!");
+      });
+  };
+};
+
 
 //게시글 하나
 // const initialPost = {
@@ -138,6 +194,12 @@ export default handleActions(
         draft.is_loading = false;
       }),
 
+      [SET_DETAIL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.target = action.payload.post_one;
+        draft.is_loaded = true;
+      }),
+
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
@@ -158,7 +220,7 @@ export default handleActions(
 
     [SET_LIKE]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.like_data;
+        draft.like_list = action.payload.like_data;
       }),
 
     // [LOADING]:(state, action) => produce(state, (draft)=>{draft.is_loading = action.payload.is_loading;})
@@ -175,6 +237,10 @@ const actionCreators = {
   editPostDB,
   deletePostDB,
   addLike,
+  addUnlike,
+  getPostOneDB,
+  setPostOne,
+  setLike,
 
 };
 
