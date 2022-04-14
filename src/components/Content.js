@@ -16,7 +16,6 @@ const Content = (props) => {
 
   const userId = localStorage.getItem("userId");
 
-
   return (
     <>
       <Grid height="100px" width="500px" padding="20px" is_flex>
@@ -52,10 +51,14 @@ const Content = (props) => {
         {userId === props.userId ? (
           <>
             <Grid>
-              <Buttons onClick={()=>{
-                setOpenInput(!openInput);
-                setComment(props.content);
-              }}>수정</Buttons>
+              <Buttons
+                onClick={() => {
+                  setOpenInput(!openInput);
+                  setComment(props.content);
+                }}
+              >
+                수정
+              </Buttons>
               <Buttons
                 onClick={() => {
                   const commentId = props._id;
@@ -106,13 +109,11 @@ const Buttons = styled.button`
   margin-left: 5px;
 `;
 
-
 const Inputvalue = styled.input`
-  height : 40px;
+  height: 40px;
   width: 180px;
-  border-radius : 5px;
-  border : none;
-  background-color : #EEEEEE;
-  padding : 4px;
-  
+  border-radius: 5px;
+  border: none;
+  background-color: #eeeeee;
+  padding: 4px;
 `;
