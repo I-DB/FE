@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import { Button, Grid, Input, Text } from "../elements";
 import { actionCreators as useActions } from "../redux/modules/user";
 
@@ -22,8 +23,8 @@ const Login = () => {
     <Grid height="100vh" is_center>
       <Grid bg="#F3E9DD" margin="100px 0 0 0" width="500px" height="700px" is_center borderRadius="10px">
       <Text size="18px"  textAlign="center" color="#889EAF" bold>
-          세상을 바꾸는 <Text color="#4D96FF" bold size="18px">I:DB</Text>
-        </Text>
+          세상을 바꾸는 <NewText>I:DB</NewText></Text>
+
         <Text size="25px" bold textAlign="center">
           로그인
         </Text>
@@ -61,3 +62,9 @@ const Login = () => {
 };
 
 export default Login;
+
+const NewText = styled.div`
+  color : #4D96FF;
+  margin-top : 5px;
+  font-size : 20px;
+`

@@ -34,7 +34,7 @@ const Header = (props) => {
           <Button
             text="로그아웃"
             margin="0 10px"
-            width="250px"
+            width="180px"
             color="black"
             backgroundColor="transparent"
             _onClick={logOut}
@@ -116,11 +116,11 @@ const LogoImage = styled.img`
 `;
 
 const UserID = styled.div`
-  width: 100px;
+  width: 200px;
   text-align: center;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items : center;
   font-size: 16px;
   color: #4d96ff;
   font-weight: 600;
