@@ -9,7 +9,6 @@ import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const PostList = (props) => {
-
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
   const isLogin = useSelector((state) => state.user.isLogin);
@@ -37,8 +36,7 @@ const PostList = (props) => {
       </ButtonFix>
       <Container>
         {post_list.map((p, idx) => {
-          return <Post key={idx} {...p}/>;
-          
+          return <Post key={idx} {...p} />;
         })}
       </Container>
     </React.Fragment>

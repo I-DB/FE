@@ -6,13 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
-
-
 const Post = (props) => {
-
   const comment = props.comment;
   const comment_cnt = comment.length;
-
 
   return (
     <React.Fragment>
@@ -26,9 +22,10 @@ const Post = (props) => {
           <Text bold margin="0 10px">
             {props.nickName}
           </Text>
-          <Text margin="10px" color="darkgrey">{props.createdAt}</Text>
+          <Text margin="10px" color="darkgrey">
+            {props.createdAt}
+          </Text>
         </Grid>
-
 
         <Grid
           _onClick={() => {
@@ -100,7 +97,5 @@ const TextHide = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
-
-
 
 export default Post;
