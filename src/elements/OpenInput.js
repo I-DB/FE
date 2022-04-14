@@ -1,9 +1,8 @@
-import { faBorderNone } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import styled from "styled-components";
 import { Text, Grid } from "./index";
 
-const Input = (props) => {
+const OpenInput = (props) => {
   const {
     label,
     placeholder,
@@ -12,8 +11,7 @@ const Input = (props) => {
     multiLine,
     value,
     maxLength,
-    border,
-    resize,
+    _defaultValue,
   } = props;
 
   if (multiLine) {
@@ -26,8 +24,6 @@ const Input = (props) => {
           onChange={_onChange}
           type={type}
           value={value}
-          border={border}
-          resize={resize}
         ></ElTextarea>
       </Grid>
     );
@@ -36,31 +32,27 @@ const Input = (props) => {
   return (
     <React.Fragment>
       <Grid>
-        <Text margin="0">{label}</Text>
-
         <ElInput
+          defaultValue={_defaultValue}
           type={type}
           placeholder={placeholder}
           onChange={_onChange}
           value={value}
           maxLength={maxLength}
-          border={border}
         />
       </Grid>
     </React.Fragment>
   );
 };
 
-Input.defaultProps = {
-  label: "텍스트",
+OpenInput.defaultProps = {
   placeholder: "입력해",
   type: "text",
   _onChange: () => {},
   multiLine: false,
   value: "",
   maxLength: "",
-  border: "",
-  resize: "none",
+  defaultValue: "",
 };
 
 const ElInput = styled.input`
@@ -68,10 +60,6 @@ const ElInput = styled.input`
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
-  ${(props) => (props.border ? `border: ${props.border};` : "")};
-  &:focus {
-    border: none;
-  }
 `;
 
 const ElTextarea = styled.textarea`
@@ -79,7 +67,6 @@ const ElTextarea = styled.textarea`
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
-  ${(props) => (props.border ? `border: ${props.border};` : "")};
 `;
 
-export default Input;
+export default OpenInput;

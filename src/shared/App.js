@@ -40,7 +40,6 @@ function App() {
             <Route path="/join" exact component={Signup} />
           </ConnectedRouter>
         </Grid>
-
       </Container>
     </React.Fragment>
   );

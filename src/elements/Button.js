@@ -67,7 +67,10 @@ const ElButton = styled.button`
   font-size: 15px;
   font-weight: 700;
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")};
-  ${(props) => (props.disabled ? `background-color: tomato;` : `background-color: #4D96FF;`)};
+  ${(props) =>
+    props.disabled
+      ? `background-color: tomato;`
+      : `background-color: #4D96FF;`};
   background-color: ${(props) => props.backgroundColor};
   &:hover {
     cursor: pointer;

@@ -11,6 +11,7 @@ const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 
 const SET_LIKE = "SET_LIKE";
+
 const ADD_LIKE = "ADD_LIKE";
 const CANCEL_LIKE = "ADD_LIKE";
 
@@ -22,6 +23,7 @@ const editPost = createAction(EDIT_POST, (postId, post) => ({ postId, post }));
 const deletePost = createAction(DELETE_POST, (postOne) => ({ postOne }));
 
 const setLike = createAction(SET_LIKE, (like_data) => ({ like_data }));
+
 const _addLike = createAction(ADD_LIKE, (userId) => ({ userId }));
 const _cancelLike = createAction(CANCEL_LIKE, (userId) => ({ userId }));
 
@@ -47,7 +49,6 @@ export const getPostDB =
     try {
       const { data } = await apis.postGet();
       dispatch(setPost(data.result));
-      // dispatch(imageCreators.setPreview(null));
     } catch (e) {
       console.log(e);
     }

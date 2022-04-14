@@ -2,9 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = (props) => {
-  const { bold, color, size, children, margin, _onClick, textAlign, width } = props;
+  const { bold, color, size, children, margin, _onClick, textAlign, width } =
+    props;
 
-  const styles = { bold: bold, color: color, size: size, margin, textAlign, width };
+  const styles = {
+    bold: bold,
+    color: color,
+    size: size,
+    margin,
+    textAlign,
+    width,
+  };
 
   return (
     <P {...styles} onClick={_onClick}>
@@ -36,6 +44,5 @@ const P = styled.p`
     font-size: 16px;
   }
 `;
-
 
 export default Text;

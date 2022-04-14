@@ -5,14 +5,13 @@ import { apis } from "../../shared/axios";
 import { setCookie, deleteCookie } from "../../shared/cookie";
 
 // 액션
-const AUTH = "AUTH";
+
 const LOG_OUT = "LOG_OUT";
 const LOG_IN = "LOG_IN";
 
 // 액션 크리에이터
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
-const Auth = createAction(AUTH, (user) => ({ user }));
 
 // 초기값
 const initialState = {
@@ -23,18 +22,17 @@ const initialState = {
 // 미들웨어
 
 // 회원가입
-const signupUser = (userId, password, nickName, comPwd) => {
-  console.log(userId, password, comPwd, nickName);
+const signupUser = (userId, password, nickName, confirmPassword) => {
   return function (dispatch, getState, { history }) {
     apis
-      .signup(userId, password, comPwd, nickName)
+      .signup(userId, password, confirmPassword, nickName)
       .then((response) => {
+        console.log(response);
         alert(response.data.msg);
-        history.replace("/");
+        history.replace("/login");
       })
       .catch((error) => {
-        alert("회원가입 먼저 해주세요!");
-        console.log(error);
+        alert(error.response.data.message);
       });
   };
 };
@@ -45,16 +43,16 @@ const loginUser = (id, pwd) => {
     apis
       .login(id, pwd)
       .then((response) => {
-        console.log(response);
         const data = response.data.token;
         setCookie("token", response.data.token);
         const userInfo = jwtDecode(data);
+        localStorage.setItem("nickName", userInfo.nickName);
         localStorage.setItem("userId", userInfo.userId);
         dispatch(logIn({ id: id }));
-        history.replace("/");
+        history.replace("/postList");
       })
       .catch((error) => {
-        console.log(error);
+        alert("회원이 아니거나 아이디와 비밀번호가 틀렸습니다!");
       });
   };
 };
@@ -63,8 +61,9 @@ const loginUser = (id, pwd) => {
 const logOutUser = () => {
   return function (dispatch, setState, { history }) {
     deleteCookie("token");
-    // deleteCookie("refreshToken");
+
     localStorage.removeItem("userId");
+    localStorage.removeItem("nickName");
     dispatch(logOut());
     history.replace("/");
   };
@@ -99,8 +98,6 @@ export default handleActions(
         draft.user = null;
         draft.isLogin = false;
       }),
-
-    [AUTH]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
 );
