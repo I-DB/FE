@@ -1,16 +1,12 @@
 import React, { useEffect } from "react";
 import { Grid, Text, Button } from "../elements";
-// import { getCookie, deleteCookie } from "../shared/Cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { history } from "../redux/configureStore";
 import styled from "styled-components";
 import IDBLogo from "../imgs/IDBLogo.png";
-// import Permit from "../shared/Permit";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 const Header = (props) => {
-  //const [is_login, setIsLogin] = React.useState(false);
-  //   const is_login = useSelector((state)=>state.user.is_login);
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const isToken = document.cookie;
@@ -24,7 +20,6 @@ const Header = (props) => {
     return (
       <Container>
         <Grid>
-
           <LogoImage
             alt="IDBLogo"
             src={IDBLogo}
@@ -35,7 +30,7 @@ const Header = (props) => {
         </Grid>
 
         <Grid flex_end>
-          <UserID>💡 {localUserId} 님 </UserID> 
+          <UserID>💡 {localUserId} 님 </UserID>
           <Button
             text="로그아웃"
             margin="0 10px"
@@ -45,17 +40,14 @@ const Header = (props) => {
             _onClick={logOut}
           ></Button>
         </Grid>
-
       </Container>
     );
   }
 
   return (
     <React.Fragment>
-
       <Container>
         <Grid>
-
           <LogoImage
             alt="IDBLogo"
             src={IDBLogo}
@@ -86,7 +78,6 @@ const Header = (props) => {
             }}
           ></Button>
         </Grid>
-
       </Container>
     </React.Fragment>
   );
@@ -125,12 +116,12 @@ const LogoImage = styled.img`
 `;
 
 const UserID = styled.div`
-  width : 100px;
-  text-align : center;
-  display : flex;
-  justify-content : center;
-  align-items : center;
-  font-size : 16px;
-  color : #4D96FF;
-  font-weight : 600;
-`
+  width: 100px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #4d96ff;
+  font-weight: 600;
+`;

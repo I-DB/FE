@@ -9,23 +9,14 @@ import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const PostList = (props) => {
-  // const post_list = useSelector((state)=>state.post.list);
-  // const user_info = useSelector((state)=>state.user.user);
 
-  // const is_loading = useSelector((state)=>state.post.is_loading);
-  // const paging = useSelector((state)=>state.post.paging);
-
-  // React.useEffect (() =>{
-
-  // }, []);
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
   const isLogin = useSelector((state) => state.user.isLogin);
   const isToken = document.cookie;
+
   React.useEffect(() => {
-    //  if(post_list.length === 0) {
     dispatch(postActions.getPostDB());
-    //  }
   }, []);
 
   const postBut = () => {

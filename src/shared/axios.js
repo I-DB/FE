@@ -1,7 +1,5 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
-// const accessToken = document.cookie.split("=")[1];
-// console.log(accessToken);
 
 export const instance = axios.create({
   baseURL: "https://ideadb.shop/",
@@ -14,14 +12,10 @@ export const instance = axios.create({
 // 헤더에 토큰 보내기
 instance.interceptors.request.use(function (config) {
   const accessToken = document.cookie.split("=")[1];
-  // const refreshToken = document.cookie.split("=")[2];
   config.headers.common["Authorization"] = `Bearer ${accessToken}`;
-  // config.headers.common["refreshToken"] = `Bearer ${refreshToken}`;
   return config;
-  // console.log(config);
-
 });
- 
+
 export const apis = {
   signup: (userId, password, comPwd, nickName) =>
     instance.post("/user/join", {
@@ -43,10 +37,6 @@ export const apis = {
     instance.patch(`/post/${postId}`, { title: title, content: content }),
   postDelete: (postId) => instance.delete(`/post/${postId}`),
 
-
   addLike: (postId) => instance.patch(`/post/like/${postId}`),
   addUnlike: (postId) => instance.patch(`/post/unlike/${postId}`),
-  //addLike: (postId) => instance.patch(`/post/like/${postId}`, {postId: postId}),
-  // postGetOne : (items) => instance.get(`/api/items/${}`),
-  //imageUpload: (image) => instance.post("/api/imgs", image),
 };
