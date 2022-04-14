@@ -35,11 +35,11 @@ const Header = (props) => {
         </Grid>
 
         <Grid flex_end>
-          <UserID>💡 {localUserId} 님 </UserID>
+          <UserID>💡 {localUserId} 님 </UserID> 
           <Button
             text="로그아웃"
             margin="0 10px"
-            width="150px"
+            width="250px"
             color="black"
             backgroundColor="transparent"
             _onClick={logOut}
