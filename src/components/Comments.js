@@ -110,6 +110,7 @@ const CommentContainer = styled.div`
   }
 
   margin-left : 10px;
+
 `;
 
 const Buttons = styled.button`
