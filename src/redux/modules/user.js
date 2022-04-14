@@ -70,32 +70,6 @@ const logOutUser = () => {
   };
 };
 
-// 유저 정보
-// const userInfoAuth = () => {
-//   return function (dispatch, setState, { history }) {
-//     apis
-//       .auth()
-//       .then((response) => {
-//         // localStorage.setItem("nickName", response.data.user.nickName);
-//         // localStorage.setItem("ID", response.data.user.userId);
-//         const tokenCheck = document.cookie;
-//         // const nickName = localStorage.getItem("nickName");
-//         // const userId = localStorage.getItem("ID");
-//         if (tokenCheck) {
-//           // dispatch(dispatch(logIn({ nickName: nickName, userId: userId })));
-//         } else {
-//           dispatch(logOutUser());
-//         }
-//         console.log(response);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//         alert("다시 로그인 해주세요");
-//         history.replace("/login");
-//       });
-//   };
-// };
-
 // 로그인 체크
 const loginCheck = () => {
   return function (dispatch, setState, { history }) {

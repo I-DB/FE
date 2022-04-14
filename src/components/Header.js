@@ -1,19 +1,16 @@
 import React, { useEffect } from "react";
 import { Grid, Text, Button } from "../elements";
-// import { getCookie, deleteCookie } from "../shared/Cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { history } from "../redux/configureStore";
 import styled from "styled-components";
 import IDBLogo from "../imgs/IDBLogo.png";
-// import Permit from "../shared/Permit";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 const Header = (props) => {
-  //const [is_login, setIsLogin] = React.useState(false);
-  //   const is_login = useSelector((state)=>state.user.is_login);
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const isToken = document.cookie;
+  const localUserId = localStorage.getItem("userId");
 
   const logOut = () => {
     dispatch(userActions.logOutUser());
@@ -23,16 +20,6 @@ const Header = (props) => {
     return (
       <Container>
         <Grid>
-          {/* <Text
-            margin="20px 0"
-            size="24px"
-            bold
-            _onClick={() => {
-              history.push("/postList");
-            }}
-          >
-            IDB
-          </Text> */}
           <LogoImage
             alt="IDBLogo"
             src={IDBLogo}
@@ -43,35 +30,24 @@ const Header = (props) => {
         </Grid>
 
         <Grid flex_end>
+          <UserID>💡 {localUserId} 님 </UserID>
           <Button
             text="로그아웃"
             margin="0 10px"
-            width="150px"
+            width="250px"
             color="black"
             backgroundColor="transparent"
             _onClick={logOut}
           ></Button>
         </Grid>
-        {/* </Grid> */}
       </Container>
     );
   }
 
   return (
     <React.Fragment>
-      {/* <Grid is_flex padding="4px 16px"> */}
       <Container>
         <Grid>
-          {/* <Text
-            margin="20px 0"
-            size="24px"
-            bold
-            _onClick={() => {
-              history.push("/postList");
-            }}
-          >
-            IDB
-          </Text> */}
           <LogoImage
             alt="IDBLogo"
             src={IDBLogo}
@@ -102,7 +78,6 @@ const Header = (props) => {
             }}
           ></Button>
         </Grid>
-        {/* </Grid> */}
       </Container>
     </React.Fragment>
   );
@@ -138,4 +113,15 @@ const LogoImage = styled.img`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const UserID = styled.div`
+  width: 100px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #4d96ff;
+  font-weight: 600;
 `;

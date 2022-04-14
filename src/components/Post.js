@@ -6,22 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
-const Post = (props) => {
-  //console.log(props.comment)
-  const comment = props.comment;
-  // console.log(comment);
-  const comment_cnt = comment.length;
-  // console.log(cnt);
 
-  // const updatedAt = props.updatedAt;
-  // console.log(updatedAt);
-  // const newdate = updatedAt.substr(0, 10)
-  // const newtime = updatedAt.substr(11, 5);  //03:05
-  // const hour = newtime.substr(0, 2);
-  // const newhour = parseInt(hour) + 9;
-  // const min = newtime.substr(4,2);
-  // const newupdatedAt = newdate + " " + newhour + "시 " + min + "분";
-  // console.log(newupdatedAt)
+
+const Post = (props) => {
+
+  const comment = props.comment;
+  const comment_cnt = comment.length;
+
 
   return (
     <React.Fragment>
@@ -35,13 +26,9 @@ const Post = (props) => {
           <Text bold margin="0 10px">
             {props.nickName}
           </Text>
-          <Text margin="10px">{props.createdAt}</Text>
+          <Text margin="10px" color="darkgrey">{props.createdAt}</Text>
         </Grid>
 
-        {/* <Grid flex_end padding="10px"> */}
-        {/* {props.is_me && (<Button width="100px" margin="0 5px" _onClick={() => {history.push(`/post/${props.id}`)}}>수정</Button>)} */}
-        {/* <Button width="100px" margin="0 5px" _onClick={() => {history.push(`/post/${props.id}`)}}>수정</Button> */}
-        {/* </Grid> */}
 
         <Grid
           _onClick={() => {
@@ -113,5 +100,7 @@ const TextHide = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
+
+
 
 export default Post;

@@ -1,6 +1,5 @@
 import axios from "axios";
-// const accessToken = document.cookie.split("=")[1];
-// console.log(accessToken);
+axios.defaults.withCredentials = true;
 
 export const instance = axios.create({
   baseURL: "https://ideadb.shop/",
@@ -13,12 +12,8 @@ export const instance = axios.create({
 // 헤더에 토큰 보내기
 instance.interceptors.request.use(function (config) {
   const accessToken = document.cookie.split("=")[1];
-  // const refreshToken = document.cookie.split("=")[2];
   config.headers.common["Authorization"] = `Bearer ${accessToken}`;
-  // config.headers.common["refreshToken"] = `Bearer ${refreshToken}`;
-  console.log(config);
-  // console.log(config);
-
+  return config;
 });
 
 export const apis = {
@@ -35,15 +30,13 @@ export const apis = {
   auth: () => instance.get("/user/auth"),
 
   postGet: () => instance.get("/post"),
+  postOne: (postId) => instance.get(`/post/${postId}`),
   postWrite: (title, content) =>
     instance.post("/post", { title: title, content: content }),
   postEdit: (postId, title, content) =>
     instance.patch(`/post/${postId}`, { title: title, content: content }),
   postDelete: (postId) => instance.delete(`/post/${postId}`),
 
-
   addLike: (postId) => instance.patch(`/post/like/${postId}`),
-  //addLike: (postId) => instance.patch(`/post/like/${postId}`, {postId: postId}),
-  // postGetOne : (items) => instance.get(`/api/items/${}`),
-  //imageUpload: (image) => instance.post("/api/imgs", image),
+  addUnlike: (postId) => instance.patch(`/post/unlike/${postId}`),
 };

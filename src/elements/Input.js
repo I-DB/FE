@@ -1,9 +1,10 @@
+import { faBorderNone } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import styled from "styled-components";
 import { Text, Grid } from "./index";
 
 const Input = (props) => {
-  const { label, placeholder, _onChange, type, multiLine, value, maxLength } = props;
+  const { label, placeholder, _onChange, type, multiLine, value, maxLength, border, resize } = props;
 
   if (multiLine) {
     return (
@@ -15,6 +16,8 @@ const Input = (props) => {
           onChange={_onChange}
           type={type}
           value={value}
+          border={border}
+          resize={resize}
         ></ElTextarea>
       </Grid>
     );
@@ -24,7 +27,7 @@ const Input = (props) => {
     <React.Fragment>
       <Grid>
         <Text margin="0">{label}</Text>
-        <ElInput type={type} placeholder={placeholder} onChange={_onChange} value={value} maxLength={maxLength}/>
+        <ElInput type={type} placeholder={placeholder} onChange={_onChange} value={value} maxLength={maxLength} border={border}/>
       </Grid>
     </React.Fragment>
   );
@@ -38,6 +41,9 @@ Input.defaultProps = {
   multiLine: false,
   value: "",
   maxLength: "",
+  border : "",
+  resize : "none",
+
 };
 
 const ElInput = styled.input`
@@ -45,6 +51,10 @@ const ElInput = styled.input`
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
+  ${(props) => (props.border ? `border: ${props.border};` : "")};
+  &:focus {
+    border: none;
+  }
 `;
 
 const ElTextarea = styled.textarea`
@@ -52,6 +62,7 @@ const ElTextarea = styled.textarea`
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
+  ${(props) => (props.border ? `border: ${props.border};` : "")};
 `;
 
 export default Input;

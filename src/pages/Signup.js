@@ -17,23 +17,24 @@ const Signup = () => {
 
   return (
     <>
-      <Grid border="1mm ridge #90e0ef" bg="#cbf3f0" margin="100px 0 0 0">
-        <Text size="30px" bold textAlign="center">
+    <Grid height="100vh" is_center>
+      <Grid bg="#F3E9DD" margin="100px 0 0 0" width="500px" height="700px" is_center borderRadius="10px">
+        <Text size="25px" bold textAlign="center">
           회원가입
         </Text>
-        <Grid padding="15px 20%">
+        <Grid padding="15px 20%" height="100px">
           <Input
-            label="아이디"
-            placeholder="아이디를 입력해주새요."
+            label=""
+            placeholder="아이디를 입력해주세요."
             _onChange={(e) => {
               setUserId(e.target.value);
             }}
             value={userId}
           />
         </Grid>
-        <Grid padding="15px 20%">
+        <Grid padding="15px 20%" height="100px">
           <Input
-            label="비밀번호"
+            label=""
             placeholder="비밀번호를 입력해주세요."
             type="password"
             _onChange={(e) => {
@@ -42,10 +43,10 @@ const Signup = () => {
             value={password}
           />
         </Grid>
-        <Grid padding="15px 20%">
+        <Grid padding="15px 20%" height="100px">
           <Input
-            label="비밀번호 확인"
-            placeholder="비밀번호를 입력해주세요."
+            label=""
+            placeholder="비밀번호를 확인해주세요."
             type="password"
             _onChange={(e) => {
               setComPwd(e.target.value);
@@ -53,10 +54,10 @@ const Signup = () => {
             value={comPwd}
           />
         </Grid>
-        <Grid padding="15px 20%">
+        <Grid padding="15px 20%" height="100px">
           <Input
-            label="닉네임"
-            placeholder="닉네임을 입력해주새요."
+            label=""
+            placeholder="닉네임을 입력해주세요."
             _onChange={(e) => {
               setNickName(e.target.value);
             }}
@@ -64,6 +65,7 @@ const Signup = () => {
           />
         </Grid>
         <Button text="가입하기" width="230px" margin="10px 35% 30px" _onClick={join} />
+      </Grid>
       </Grid>
     </>
   );
