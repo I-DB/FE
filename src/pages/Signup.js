@@ -9,10 +9,20 @@ const Signup = () => {
   const [userId, setUserId] = useState();
   const [password, setPassWord] = useState();
   const [nickName, setNickName] = useState();
-  const [comPwd, setComPwd] = useState();
+  const [confirmPassword, setComPwd] = useState();
 
   const join = () => {
-    dispatch(useActions.signupUser(userId, password, nickName, comPwd));
+    if (userId === "" || password === "" || nickName === "") {
+      alert("아이디, 비밀번호, 닉네임을 모두 입력해주세요!");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다!");
+      return;
+    }
+    dispatch(
+      useActions.signupUser(userId, password, nickName, confirmPassword)
+    );
   };
 
   return (
@@ -51,7 +61,7 @@ const Signup = () => {
             _onChange={(e) => {
               setComPwd(e.target.value);
             }}
-            value={comPwd}
+            value={confirmPassword}
           />
         </Grid>
         <Grid padding="15px 20%" height="100px">
@@ -64,7 +74,12 @@ const Signup = () => {
             value={nickName}
           />
         </Grid>
-        <Button text="가입하기" width="230px" margin="10px 35% 30px" _onClick={join} />
+        <Button
+          text="가입하기"
+          width="230px"
+          margin="10px 35% 30px"
+          _onClick={join}
+        />
       </Grid>
       </Grid>
     </>

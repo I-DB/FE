@@ -64,18 +64,22 @@ Grid.defaultProps = {
 const GridBox = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  box-shadow : ${(props) => props.boxShadow};
+  box-shadow: ${(props) => props.boxShadow};
   box-sizing: border-box;
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
-  ${(props) => (props.is_flex ? `display: flex; align-items: center; justify-content: space-between;` : "")}
+  ${(props) =>
+    props.is_flex
+      ? `display: flex; align-items: center; justify-content: space-between;`
+      : ""}
   ${(props) =>
     props.is_center
       ? `display: flex; flex-direction : column; align-items: center; justify-content: center;`
       : ""}
   ${(props) => (props.center ? `text-align: center;` : "")}
-  ${(props) => (props.flex_end ? `display: flex; justify-content: flex-end;` : "")}
+  ${(props) =>
+    props.flex_end ? `display: flex; justify-content: flex-end;` : ""}
   ${(props) => (props.border ? `border:${props.border}` : "")}
   ${(props) => (props.borderRadius ? `border-radius:${props.borderRadius}` : "")}
 `;

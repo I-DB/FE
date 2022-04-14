@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import Post from "../components/Post";
 import { Button, Grid, Input, Text } from "../elements";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +12,7 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 import { apis } from "../shared/axios";
+import Comments from "../components/Comments";
 
 const PostDetail = (props) => {
   const dispatch = useDispatch();
