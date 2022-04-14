@@ -16,9 +16,6 @@ const Content = (props) => {
 
   const userId = localStorage.getItem("userId");
 
-  const inputOpen = () => {
-    setOpenInput(!openInput);
-  };
 
   return (
     <>
@@ -31,16 +28,15 @@ const Content = (props) => {
           ) : (
             <>
               <Grid is_flex>
-                <input
+                <Inputvalue
                   onChange={(e) => {
                     setComment(e.target.value);
                   }}
-                  defaultValue={comment}
-                ></input>
+                  value={comment}
+                ></Inputvalue>
                 <InputBtn
                   onClick={() => {
                     const commentId = props._id;
-
                     setOpenInput(!openInput);
                     dispatch(mentActions.__mentUpdata(id, comment, commentId));
                     setComment("");
@@ -56,7 +52,10 @@ const Content = (props) => {
         {userId === props.userId ? (
           <>
             <Grid>
-              <Buttons onClick={inputOpen}>수정</Buttons>
+              <Buttons onClick={()=>{
+                setOpenInput(!openInput);
+                setComment(props.content);
+              }}>수정</Buttons>
               <Buttons
                 onClick={() => {
                   const commentId = props._id;
@@ -80,7 +79,6 @@ const InputBtn = styled.button`
   text-decoration: none;
   text-align: center;
   color: white;
-  /* margin: 25px 10px 0px 0px; */
 
   font-weight: 700;
   font-size: 14px;
@@ -106,4 +104,15 @@ const Buttons = styled.button`
   background-color: silver;
   border-radius: 5px;
   margin-left: 5px;
+`;
+
+
+const Inputvalue = styled.input`
+  height : 40px;
+  width: 180px;
+  border-radius : 5px;
+  border : none;
+  background-color : #EEEEEE;
+  padding : 4px;
+  
 `;

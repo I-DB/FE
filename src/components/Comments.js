@@ -69,7 +69,7 @@ const Comments = (props) => {
 
       <InputComment
         type="text"
-        placeholder="의견을 말해주세요!"
+        placeholder="의견을 남겨주세요!"
         value={content}
         onChange={(e) => {
           setContent(e.target.value);
@@ -89,7 +89,12 @@ const Comments = (props) => {
 };
 const InputComment = styled.input`
   width: 400px;
-  margin-left: 10px;
+  margin-left: 20px;
+  height : 40px;
+  border-radius : 5px;
+  border : none;
+  background-color : #EEEEEE;
+  padding : 4px;
 `;
 
 const CommentContainer = styled.div`
@@ -103,6 +108,8 @@ const CommentContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+
+  margin-left : 10px;
 `;
 
 const Buttons = styled.button`
