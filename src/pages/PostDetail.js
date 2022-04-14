@@ -17,34 +17,29 @@ const PostDetail = (props) => {
   // const post_list = useSelector((state) => state.post.list);
 
   const postOne = useSelector((state) => state.post.target);
-
   const likeList = useSelector((state) => state.post.like_list);
-  console.log(likeList)
-  const [likeLength, setLikeLength] = useState(likeList.length);
+  //useSelector=>render, usestate는 이전 값을 가진채
+  //const [likeLength, setLikeLength] = useState(likeList.length);
   
   const id = props.match.params.id;
-  const [is_like, setIsLike] = useState(false);
+  const [is_like, setIsLike] = useState();
 
   const localUserId = localStorage.getItem("userId");
   const likeUser = likeList.find((p) => p === localUserId);
+  // let length = likeList.length;
 
   const userId = postOne.userId;
   //const newdate = postOne.updatedAt.substr(0, 10);
+
 
   const likeCheck = () => {
       if(!localUserId){
         alert("로그인 후 이용 가능합니다!");
         history.replace("/login");
       }
-      dispatch(postActions.addLike(id));
+       dispatch(postActions.addLike(id, userId));
       setIsLike(true);
-      setLikeLength(likeLength+1);
 
-    // apis.addLike(id)
-    // .then((res)=>{
-    //   setIsLike(true);
-    //   dispatch(postActions.getPostOneDB(id));
-    //})
   };
 
   const unlikeCheck = () => {
@@ -52,18 +47,14 @@ const PostDetail = (props) => {
       alert("로그인 후 이용 가능합니다!");
       history.replace("/login");
     }
-      dispatch(postActions.addUnlike(id));
+      dispatch(postActions.addUnlike(id, userId));
       setIsLike(false);
-      setLikeLength(likeLength-1);
   };
 
 
   React.useEffect(() => {
     dispatch(postActions.getPostOneDB(id));
-    //console.log(likeUser)
-    if(likeUser) {
-      setIsLike(true);
-    }
+
   }, []);
 
 
@@ -76,52 +67,57 @@ const PostDetail = (props) => {
     <>
       <Grid margin="200px 0 0 0" height="auto" is_flex>
         <LeftContainer>
-          {/* <Post {...post}/> */}
           <Container>
             <Grid is_flex height="120px">
-              <Text bold margin="25px 0 0 30px" size="15px">
+              <Text bold margin="25px 0 0 30px" size="14px">
                 작성자 : {postOne.nickName}
               </Text>
               <Text margin="0 15px 0 0" color="darkgrey">
               </Text>
             </Grid>
             <Grid>
-              <Text bold margin="25px 0 0 30px" size="18px" color="#4D96FF">
-                제목 : {postOne.title}
+              <Text bold margin="25px 0 0 30px" size="14px"  color="darkgrey">
+                제목
               </Text>
-              <Text bold margin="25px 0 0 30px" size="15px">
-                내용 : {postOne.content}
+              <Text bold margin="25px 0 0 30px" size="17px" color="#4D96FF" >
+                  {postOne.title}
               </Text>
+              <Text bold margin="25px 0 0 30px" size="14px" color="darkgrey">
+                아이디어 내용
+              </Text>
+              <Text bold margin="25px 0 0 30px" size="15px">{postOne.content}</Text>
             </Grid>
           </Container>
 
           <Bottom>
-            {is_like ? (
+            { likeUser || is_like === true
+            ? (
               <FontAwesomeIcon
                 icon={faThumbsUp}
                 style={{
-                  fontSize: "20px",
+                  fontSize: "25px",
                   color: "red",
                   marginRight: "5px",
                   marginLeft: "5px",
                 }}
                 onClick={unlikeCheck}
               /> 
-            ) : (
+            )
+            : !likeUser || is_like === false
+              ? (
               <FontAwesomeIcon
                 icon={faThumbsUp}
                 style={{
-                  fontSize: "20px",
+                  fontSize: "25px",
                   color: "#4D96FF",
                   marginRight: "5px",
                   marginLeft: "5px",
                 }}
                 onClick={likeCheck}
-              />
-            )}
-            {/* {likeList.length} */}
-            {likeLength} 
-
+              /> 
+            ) : null } <Text color="#5584AC">Good Idea!</Text>
+            {/* {likeList.length}  */}
+              
 
             <ButtonFlex>
               {localUserId === userId ? (
@@ -239,7 +235,7 @@ const Bottom = styled.div`
 
 const CommentContainer = styled.div`
   width: 500px;
-  height: 200px;
+  height: 500px;
   overflow: auto;
 
   -ms-overflow-style: none;

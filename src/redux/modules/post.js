@@ -9,7 +9,10 @@ const SET_DETAIL = "SET_DETAIL";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
+
 const SET_LIKE = "SET_LIKE";
+const ADD_LIKE = "ADD_LIKE";
+const CANCEL_LIKE = "ADD_LIKE";
 //const LOADING = "LOADING";
 
 //2.
@@ -18,7 +21,11 @@ const setPostOne = createAction(SET_DETAIL, (post_one)=>({post_one}));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (postId, post) => ({ postId, post }));
 const deletePost = createAction(DELETE_POST, (postOne) => ({ postOne }));
+
 const setLike = createAction(SET_LIKE, (like_data) => ({ like_data }));
+const _addLike = createAction(ADD_LIKE, (userId) => ({ userId }));
+const _cancelLike = createAction(CANCEL_LIKE, (userId) => ({ userId }));
+
 
 //const loading = createAction(LOADING, (is_loading) => ({is_loading}));
 
@@ -77,7 +84,11 @@ export const getPostOneDB =
 
     try {
       const { data } = await apis.postOne(id);
-      dispatch(setLike(data.result.liked));
+
+      let resultLiked = data.result.liked;
+      //console.log(resultLiked);
+      dispatch(setLike(resultLiked));
+      //console.log(data.result.liked);
       dispatch(setPostOne(data.result));
 
     } catch (e) {
@@ -140,12 +151,15 @@ const deletePostDB = (postId) => {
 
 
 //좋아요
-const addLike = (postId) => {
+const addLike = (postId, userId) => {
   return function (dispatch, getState, { history }) {
+
+    // const _like_count=getState().target.liked;
+    // console.log(_like_count);
     apis
       .addLike(postId)
       .then(function (response) {
-        // const like_data = {};
+        _addLike(userId);
       })
       .catch(function (err) {
         alert("좋아요 실패!!!!");
@@ -154,15 +168,15 @@ const addLike = (postId) => {
 };
 
 //좋아요 취소
-const addUnlike = (postId) => {
+const addUnlike = (postId, userId) => {
   return function (dispatch, getState, { history }) {
     apis
       .addUnlike(postId)
       .then(function (response) {
-        // const like_data = {};
+        _cancelLike(userId);
       })
       .catch(function (err) {
-        alert("언라이크 실패!!!!");
+        alert("안좋아요 실패!!!!");
       });
   };
 };
@@ -218,9 +232,21 @@ export default handleActions(
         //draft.post = action.payload.postOne;
       }),
 
-    [SET_LIKE]: (state, action) =>
+      [SET_LIKE]: (state, action) =>
       produce(state, (draft) => {
         draft.like_list = action.payload.like_data;
+      }),
+
+      [ADD_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+          draft.like_list.push(action.payload.userId);
+      }),
+
+      [CANCEL_LIKE]: (state, action) =>
+      produce(state, (draft) => {
+          //draft.like_list[action.payload.postId] = draft.like_list[
+          draft.like_list = 
+          draft.like_list.filter((l) => l !== action.payload.userId);
       }),
 
     // [LOADING]:(state, action) => produce(state, (draft)=>{draft.is_loading = action.payload.is_loading;})
@@ -241,6 +267,8 @@ const actionCreators = {
   getPostOneDB,
   setPostOne,
   setLike,
+  _addLike,
+  _cancelLike
 
 };
 

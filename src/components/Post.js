@@ -36,7 +36,7 @@ const Post = (props) => {
           <Text bold margin="0 10px">
             {props.nickName}
           </Text>
-          <Text margin="10px" color="darkgrey">{props.updatedAt}</Text>
+          <Text margin="10px" color="darkgrey">{props.updatedAt.substr(0, 10)}</Text>
         </Grid>
 
         {/* <Grid flex_end padding="10px"> */}

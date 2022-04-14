@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 // const accessToken = document.cookie.split("=")[1];
 // console.log(accessToken);
 

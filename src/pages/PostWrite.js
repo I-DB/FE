@@ -47,10 +47,10 @@ const PostWrite = (props) => {
         </Grid>
 
         <Grid width="500px" height="80px" margin="0 0 0 20px">
-          <Input type="text" label="제목" placeholder="제목을 입력해주세요." _onChange={(e)=>{setTitle(e.target.value)}} maxLength="30" value={title}/>
+          <Input border="none" type="text" label="제목" placeholder="제목을 입력해주세요." _onChange={(e)=>{setTitle(e.target.value)}} maxLength="30" value={title}/>
         </Grid>
         <Grid width="750px" height="80px" margin="0 0 0 20px">
-          <Input label="아이디어 내용" placeholder="아이디어 내용 작성" border="none" multiLine _onChange={(e)=>{setContent(e.target.value)}} value={content}/>
+          <Input resize label="아이디어 내용" placeholder="자유롭게 아이디어를 표현하세요!" border="none" multiLine _onChange={(e)=>{setContent(e.target.value)}} value={content}/>
           {/* <input label="아이디어 내용" placeholder="아이디어 내용 작성" onChange={(e)=>{setContent(e.target.value)}} value={content} /> */}
         </Grid>
         </Container>
