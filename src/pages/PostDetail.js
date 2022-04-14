@@ -22,7 +22,7 @@ const PostDetail = (props) => {
   //const [likeLength, setLikeLength] = useState(likeList.length);
   
   const id = props.match.params.id;
-  const [is_like, setIsLike] = useState();
+  const [is_like, setIsLike] = useState(false);
 
   const localUserId = localStorage.getItem("userId");
   const likeUser = likeList.find((p) => p === localUserId);
@@ -49,6 +49,7 @@ const PostDetail = (props) => {
     }
       dispatch(postActions.addUnlike(id, userId));
       setIsLike(false);
+      window.location.reload();
   };
 
 
@@ -103,7 +104,7 @@ const PostDetail = (props) => {
                 onClick={unlikeCheck}
               /> 
             )
-            : !likeUser || is_like === false
+            : !likeUser || is_like !== true
               ? (
               <FontAwesomeIcon
                 icon={faThumbsUp}
@@ -115,6 +116,7 @@ const PostDetail = (props) => {
                 }}
                 onClick={likeCheck}
               /> 
+            // ) : null } <Text color="#5584AC">Good Idea!</Text>
             ) : null } <Text color="#5584AC">Good Idea!</Text>
             {/* {likeList.length}  */}
               

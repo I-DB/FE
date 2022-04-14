@@ -14,6 +14,7 @@ const Header = (props) => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
   const isToken = document.cookie;
+  const localUserId = localStorage.getItem("userId");
 
   const logOut = () => {
     dispatch(userActions.logOutUser());
@@ -23,16 +24,7 @@ const Header = (props) => {
     return (
       <Container>
         <Grid>
-          {/* <Text
-            margin="20px 0"
-            size="24px"
-            bold
-            _onClick={() => {
-              history.push("/postList");
-            }}
-          >
-            IDB
-          </Text> */}
+
           <LogoImage
             alt="IDBLogo"
             src={IDBLogo}
@@ -43,6 +35,7 @@ const Header = (props) => {
         </Grid>
 
         <Grid flex_end>
+          <UserID>💡 {localUserId} 님 </UserID>
           <Button
             text="로그아웃"
             margin="0 10px"
@@ -52,26 +45,17 @@ const Header = (props) => {
             _onClick={logOut}
           ></Button>
         </Grid>
-        {/* </Grid> */}
+
       </Container>
     );
   }
 
   return (
     <React.Fragment>
-      {/* <Grid is_flex padding="4px 16px"> */}
+
       <Container>
         <Grid>
-          {/* <Text
-            margin="20px 0"
-            size="24px"
-            bold
-            _onClick={() => {
-              history.push("/postList");
-            }}
-          >
-            IDB
-          </Text> */}
+
           <LogoImage
             alt="IDBLogo"
             src={IDBLogo}
@@ -102,7 +86,7 @@ const Header = (props) => {
             }}
           ></Button>
         </Grid>
-        {/* </Grid> */}
+
       </Container>
     </React.Fragment>
   );
@@ -139,3 +123,14 @@ const LogoImage = styled.img`
     cursor: pointer;
   }
 `;
+
+const UserID = styled.div`
+  width : 100px;
+  text-align : center;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  font-size : 16px;
+  color : #4D96FF;
+  font-weight : 600;
+`

@@ -46,7 +46,8 @@ const PostList = (props) => {
       </ButtonFix>
       <Container>
         {post_list.map((p, idx) => {
-          return <Post key={idx} {...p} />;
+          return <Post key={idx} {...p}/>;
+          
         })}
       </Container>
     </React.Fragment>
